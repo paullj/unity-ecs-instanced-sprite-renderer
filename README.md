@@ -2,6 +2,8 @@
 
 This project is a simple example of how Unity's new Entity Component System (ECS) in 2018.1.0b12 can be used to create a performant instanced sprite renderer. Find out about the [new ECS in Unity here](https://github.com/Unity-Technologies/EntityComponentSystemSamples).
 
+The assets used in the example are from [Kenney's Animal Pack](https://kenney.nl/)
+
 ## Quick Start
 1. Make sure you have [this version of Unity 2018.1.0b12](https://beta.unity3d.com/download/ed1bf90b40e6/public_download.html) installed
 2. Make sure the manifest.json file locatated at `.../[PROJECT FOLDER]/Packages/manifest.json` looks like this:
@@ -26,5 +28,3 @@ By adding `SpriteInstanceRenderer` to an entity it is rendered using its `Positi
 
 # Improvements
 This is a very naive implementation that I threw together, however it does provide fairly good results even with 10,000 entities.
-
-The assets used in the example are from [Kenney's Animal Pack](https://kenney.nl/)

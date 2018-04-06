@@ -20,11 +20,15 @@ The assets used in the example are from [Kenney's Animal Pack](https://kenney.nl
   "registry": "https://staging-packages.unity.com"
 }
 ```
-3. Download [this .unitypackage file](https://github.com/toinfiniityandbeyond/ecs-instanced-sprite-renderer/releases/download/0.1/ECS.Instanced.Sprite.Renderer.unitypackage) and import it.
-4. Open **Example Scene** and press play.
+3. Download [this .unitypackage file](https://github.com/toinfiniityandbeyond/ecs-instanced-sprite-renderer/releases/download/0.2/ECS.Instanced.Sprite.Renderer.unitypackage) and import it.
+4. Open **SpriteRendererScene** and press play.
 
 ## How it Works
 By adding `SpriteInstanceRenderer` to an entity it is rendered using its `Position2D` and `Heading2D` as a quad with a texture on it.  The `SpriteInstanceRender` inherits `ISharedComponentData` meaning any entity using same instance of will be drawn in one draw call. This is possible because of [Graphics.DrawMeshInstanced](https://docs.unity3d.com/ScriptReference/Graphics.DrawMeshInstanced.html) method. In the Example Scene included, 10,000 sprites are drawn. However the before mentioned method only draws a maximum of 1023 instances at once, so it splits up into as many groups necessary to draw all the instances.
 
-## Improvements
-This is a very naive implementation that I threw together, however it does provide fairly good results even with 10,000 entities.
+## Limitations
+Due to some weirdness from Unity's `TransformMatrix` component everything is on the (x, z) plane and not the (x, y) that you would expect. `Graphics.DrawMeshInstanced` has a set of limitations that are not optimal for working with ECS. Specifically:
+* No way to push the matrices from a job
+* No NativeArray API, currently uses `Matrix4x4[]`
+
+As a result this code is not yet jobified. For now, we have to copy our data into Matrix4x4[] with a specific upper limit of how many instances we can render in one batch.

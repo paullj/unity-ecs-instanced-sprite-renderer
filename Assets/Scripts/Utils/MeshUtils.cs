@@ -12,10 +12,10 @@ public static class MeshUtils
     {
         Vector3[] _vertices =
         {
-            new Vector2(size, size) - pivot,
-            new Vector2(size, 0) - pivot,
-            new Vector2(0, 0) - pivot,
-            new Vector2(0, size) - pivot
+            new Vector3(size - pivot.x, 0, size - pivot.y),
+            new Vector3(size - pivot.x, 0, 0 - pivot.y),
+            new Vector3(0 - pivot.x, 0, 0 - pivot.y),
+            new Vector3(0 - pivot.x, 0, size - pivot.y)
         };
 
         Vector2[] _uv =

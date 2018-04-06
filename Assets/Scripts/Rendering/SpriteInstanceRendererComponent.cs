@@ -3,14 +3,14 @@ using Unity.Entities;
 using Unity.Mathematics;
 using UnityEngine;
 
-namespace toinfiniityandbeyond.Rendering
+namespace toinfiniityandbeyond.Rendering2D
 {
     [Serializable]
     public struct SpriteInstanceRenderer : ISharedComponentData
     {
-        public readonly Texture2D sprite;
-        public readonly int pixelsPerUnit;
-        public readonly float2 pivot;
+        public Texture2D sprite;
+        public int pixelsPerUnit;
+        public float2 pivot;
 
         public SpriteInstanceRenderer(Texture2D sprite, int pixelsPerUnit, float2 pivot)
         {
@@ -19,4 +19,6 @@ namespace toinfiniityandbeyond.Rendering
             this.pivot = pivot;
         }
     }
+
+    public class SpriteInstanceRendererComponent : SharedComponentDataWrapper<SpriteInstanceRenderer> { }
 }

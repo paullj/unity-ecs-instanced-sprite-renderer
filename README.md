@@ -2,7 +2,8 @@
 
 This project is a simple example of how Unity's new Entity Component System (ECS) in 2018.1.0b12 can be used to create a performant instanced sprite renderer. Find out about the [new ECS in Unity here](https://github.com/Unity-Technologies/EntityComponentSystemSamples).
 
-The assets used in the example are from [Kenney's Animal Pack](https://kenney.nl/)
+The assets used in the example are from [Kenney's Animal Pack](https://kenney.nl/).
+Thanks to [@Shinao](https://www.reddit.com/user/Shinao) for the help. 
 
 ## Quick Start
 1. Make sure you have [this version of Unity 2018.1.0b12](https://beta.unity3d.com/download/ed1bf90b40e6/public_download.html) installed

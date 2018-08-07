@@ -9,17 +9,15 @@ public static class MeshUtils
     /// <param name="size">The size of the quad</param>
     /// <param name="pivot">Where the mesh pivots</param>
     /// <returns>The quad mesh</returns>
-    public static Mesh GenerateQuad(float2 size, Vector2 pivot)
+    public static Mesh GenerateQuad(float2 size, float2 pivot)
     {
-        float halfWidth = size.x / 2f;
-        float halfHeight = size.y / 2f;
-
+        float2 scaledPivot = size * pivot;
         Vector3[] _vertices =
         {
-            new Vector3(pivot.x + halfWidth, 0, pivot.y + halfHeight),
-            new Vector3(pivot.x + halfWidth, 0, pivot.y - halfHeight),
-            new Vector3(pivot.x - halfWidth, 0, pivot.y - halfHeight),
-            new Vector3(pivot.x - halfWidth, 0, pivot.y + halfHeight)
+            new Vector3(size.x - scaledPivot.x, 0, size.y - scaledPivot.y),
+            new Vector3(size.x - scaledPivot.x, 0, -scaledPivot.y),
+            new Vector3(-scaledPivot.x, 0, -scaledPivot.y),
+            new Vector3(-scaledPivot.x, 0, size.y - scaledPivot.y),
         };
 
         Vector2[] _uv =

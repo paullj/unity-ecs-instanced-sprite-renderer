@@ -43,12 +43,12 @@ namespace toinfiniityandbeyond.Examples
 
                 entityManager.SetComponentData(entity, new Position
                 {
-                    Value = new float3(Random.value * 50, 0, Random.value * 25)
+                    Value = new float3(Random.value * 50, Random.value * 25, 0)
                 });
 
                 entityManager.SetComponentData(entity, new Rotation
                 {
-                    Value =  quaternion.Euler(0, Random.value * Mathf.PI * 2,0)
+                    Value =  quaternion.Euler(0, 0, Random.value * Mathf.PI * 2)
                 });
 
                 entityManager.AddSharedComponentData(entity, renderers[i % 3]);

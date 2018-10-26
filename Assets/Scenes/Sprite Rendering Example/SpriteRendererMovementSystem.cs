@@ -17,9 +17,9 @@ namespace toinfiniityandbeyond.Examples
 
 			public void Execute(ref Position position)
 			{
-				float wobbleX = Mathf.PerlinNoise(position.Value.x, position.Value.z) - 0.5f;
-				float wobbleY = Mathf.PerlinNoise(position.Value.z, position.Value.x) - 0.5f;
-				position.Value += dt * new float3(wobbleX, 0, wobbleY);
+				float wobbleX = Mathf.PerlinNoise(position.Value.x, position.Value.y) - 0.5f;
+				float wobbleY = Mathf.PerlinNoise(position.Value.y, position.Value.x) - 0.5f;
+				position.Value += dt * new float3(wobbleX, wobbleY, 0);
 			}
 		}
 

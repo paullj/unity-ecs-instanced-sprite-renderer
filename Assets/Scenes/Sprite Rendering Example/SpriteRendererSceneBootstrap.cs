@@ -26,7 +26,7 @@ namespace toinfiniityandbeyond.Examples
             {
                 AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Scenes/Sprite Rendering Example/Sprites/elephant.png"),
                 AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Scenes/Sprite Rendering Example/Sprites/giraffe.png"),
-                AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Scenes/Sprite Rendering Example/Sprites/zebra.png"),
+                AssetDatabase.LoadAssetAtPath<Texture2D>("Assets/Scenes/Sprite Rendering Example/Sprites/moose.png"),
             };
             //Assign loaded sprites to sprite renderers
             var renderers = new[]

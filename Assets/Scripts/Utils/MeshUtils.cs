@@ -14,10 +14,10 @@ public static class MeshUtils
         float2 scaledPivot = size * pivot;
         Vector3[] _vertices =
         {
-            new Vector3(size.x - scaledPivot.x, 0, size.y - scaledPivot.y),
-            new Vector3(size.x - scaledPivot.x, 0, -scaledPivot.y),
-            new Vector3(-scaledPivot.x, 0, -scaledPivot.y),
-            new Vector3(-scaledPivot.x, 0, size.y - scaledPivot.y),
+            new Vector3(size.x - scaledPivot.x, size.y - scaledPivot.y, 0),
+            new Vector3(size.x - scaledPivot.x, -scaledPivot.y, 0),
+            new Vector3(-scaledPivot.x, -scaledPivot.y, 0),
+            new Vector3(-scaledPivot.x, size.y - scaledPivot.y, 0),
         };
 
         Vector2[] _uv =

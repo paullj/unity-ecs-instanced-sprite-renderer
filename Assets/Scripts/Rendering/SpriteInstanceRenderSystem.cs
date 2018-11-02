@@ -6,12 +6,11 @@ using Unity.Transforms;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Experimental.PlayerLoop;
-using Unity.Transforms2D;
 
 namespace toinfiniityandbeyond.Rendering2D
 {
     /// <summary>
-    /// Renders all Entities containing both SpriteInstanceRenderer & TransformMatrix components.
+    /// Renders all Entities containing both SpriteInstanceRenderer & LocalToWorld components.
     /// </summary>
     [UpdateAfter(typeof(PreLateUpdate.ParticleSystemBeginUpdateAll))]
     [ExecuteInEditMode]
@@ -26,7 +25,7 @@ namespace toinfiniityandbeyond.Rendering2D
 		private ComponentGroup instanceRendererGroup;
 
 	    // This is the ugly bit, necessary until Graphics.DrawMeshInstanced supports NativeArrays pulling the data in from a job.
-        private static unsafe void CopyMatrices(ComponentDataArray<TransformMatrix> transforms, int beginIndex, int length, Matrix4x4[] outMatrices)
+        private static unsafe void CopyMatrices(ComponentDataArray<LocalToWorld> transforms, int beginIndex, int length, Matrix4x4[] outMatrices)
         {
 	        // @TODO: This is using unsafe code because the Unity DrawInstances API takes a Matrix4x4[] instead of NativeArray.
 	        // We want to use the ComponentDataArray.CopyTo method
@@ -34,8 +33,8 @@ namespace toinfiniityandbeyond.Rendering2D
 	        // if the nativeslice layout matches the layout of the component data. It's very fast...
             fixed (Matrix4x4* matricesPtr = outMatrices)
             {
-                Assert.AreEqual(sizeof(Matrix4x4), sizeof(TransformMatrix));
-	            var matricesSlice = NativeSliceUnsafeUtility.ConvertExistingDataToNativeSlice<TransformMatrix>(matricesPtr, sizeof(Matrix4x4), length);
+                Assert.AreEqual(sizeof(Matrix4x4), sizeof(LocalToWorld));
+	            var matricesSlice = NativeSliceUnsafeUtility.ConvertExistingDataToNativeSlice<LocalToWorld>(matricesPtr, sizeof(Matrix4x4), length);
 	            #if ENABLE_UNITY_COLLECTIONS_CHECKS
 	            NativeSliceUnsafeUtility.SetAtomicSafetyHandle(ref matricesSlice, AtomicSafetyHandle.GetTempUnsafePtrSliceHandle());
 	            #endif
@@ -44,27 +43,27 @@ namespace toinfiniityandbeyond.Rendering2D
             }
         }
 
-	    protected override void OnCreateManager(int capacity)
+	    protected override void OnStartRunning()
 	    {
-	        // We want to find all MeshInstanceRenderer & TransformMatrix combinations and render them
-	        instanceRendererGroup = GetComponentGroup(typeof(SpriteInstanceRenderer), typeof(TransformMatrix));
+	        // We want to find all MeshInstanceRenderer & LocalToWorld combinations and render them
+	        instanceRendererGroup = GetComponentGroup(typeof(SpriteInstanceRenderer), typeof(LocalToWorld));
 	    }
 
 	    protected override void OnUpdate()
 		{
 		    // We want to iterate over all unique MeshInstanceRenderer shared component data,
 		    // that are attached to any entities in the world
-            EntityManager.GetAllUniqueSharedComponentDatas(cacheduniqueRendererTypes);
+            EntityManager.GetAllUniqueSharedComponentData(cacheduniqueRendererTypes);
             for (int i = 0;i != cacheduniqueRendererTypes.Count;i++)
             {
-                // For each unique MeshInstanceRenderer data, we want to get all entities with a TransformMatrix
+                // For each unique MeshInstanceRenderer data, we want to get all entities with a LocalToWorld
                 // SharedComponentData gurantees that all those entities are packed togehter in a chunk with linear memory layout.
                 // As a result the copy of the matrices out is internally done via memcpy.
                 var renderer = cacheduniqueRendererTypes[i];
                 if (renderer.sprite == null)
                     continue;
                 instanceRendererGroup.SetFilter(renderer);
-                var transforms = instanceRendererGroup.GetComponentDataArray<TransformMatrix>();
+                var transforms = instanceRendererGroup.GetComponentDataArray<LocalToWorld>();
 
                 Mesh mesh;
                 Material material;

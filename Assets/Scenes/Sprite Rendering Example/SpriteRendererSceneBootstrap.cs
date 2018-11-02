@@ -2,11 +2,11 @@
 using Unity.Entities;
 using Unity.Mathematics;
 using Unity.Transforms;
-using Unity.Transforms2D;
 
 using toinfiniityandbeyond.Rendering2D;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 namespace toinfiniityandbeyond.Examples
 {
@@ -38,18 +38,17 @@ namespace toinfiniityandbeyond.Examples
             //Spawn 10,000 entities with random positions/rotations
             for (int i = 0; i < 10000; i++)
             {
-                var entity = entityManager.CreateEntity(ComponentType.Create<Position2D>(),
-                                                        ComponentType.Create<Heading2D>(),
-                                                        ComponentType.Create<TransformMatrix>());
+                var entity = entityManager.CreateEntity(ComponentType.Create<Position>(),
+                                                        ComponentType.Create<Rotation>());
 
-                entityManager.SetComponentData(entity, new Position2D
+                entityManager.SetComponentData(entity, new Position
                 {
-                    Value = new float2(Random.value * 50, Random.value * 25)
+                    Value = new float3(Random.value * 50, Random.value * 25, 0)
                 });
 
-                entityManager.SetComponentData(entity, new Heading2D
+                entityManager.SetComponentData(entity, new Rotation
                 {
-                    Value = new float2(Random.value, Random.value)
+                    Value =  quaternion.Euler(0, 0, Random.value * Mathf.PI * 2)
                 });
 
                 entityManager.AddSharedComponentData(entity, renderers[i % 3]);

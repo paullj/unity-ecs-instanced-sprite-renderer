@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Unity.Mathematics;
+using UnityEngine;
 
 public static class MeshUtils
 {
@@ -8,14 +9,15 @@ public static class MeshUtils
     /// <param name="size">The size of the quad</param>
     /// <param name="pivot">Where the mesh pivots</param>
     /// <returns>The quad mesh</returns>
-    public static Mesh GenerateQuad(float size, Vector2 pivot)
+    public static Mesh GenerateQuad(float2 size, float2 pivot)
     {
+        float2 scaledPivot = size * pivot;
         Vector3[] _vertices =
         {
-            new Vector3(size - pivot.x, size - pivot.y, 0),
-            new Vector3(size - pivot.x, 0 - pivot.y, 0),
-            new Vector3(0 - pivot.x, 0 - pivot.y, 0),
-            new Vector3(0 - pivot.x,  size - pivot.y, 0)
+            new Vector3(size.x - scaledPivot.x, size.y - scaledPivot.y, 0),
+            new Vector3(size.x - scaledPivot.x, -scaledPivot.y, 0),
+            new Vector3(-scaledPivot.x, -scaledPivot.y, 0),
+            new Vector3(-scaledPivot.x, size.y - scaledPivot.y, 0),
         };
 
         Vector2[] _uv =

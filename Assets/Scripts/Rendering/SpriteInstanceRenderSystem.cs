@@ -67,7 +67,8 @@ namespace toinfiniityandbeyond.Rendering2D
 
                 Mesh mesh;
                 Material material;
-                var size = math.max(renderer.sprite.width, renderer.sprite.height) / (float) renderer.pixelsPerUnit;
+                var size = new float2(renderer.sprite.width / (float)renderer.pixelsPerUnit,
+                    renderer.sprite.height / (float)renderer.pixelsPerUnit);
                 float2 meshPivot = renderer.pivot * size;
                 if (!meshCache.TryGetValue(renderer, out mesh))
                 {
